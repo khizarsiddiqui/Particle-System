@@ -6,3 +6,13 @@
 # • Using textures and billboarding to imitate complex 3D objects
 # • Using OpenGL rendering features such as blending, depth masks, and alpha channels to draw semitransparent objects
 # • Using a camera model to draw 3D perspective views
+
+# working
+
+# Your particle system should have these features:
+# • The particles should emerge from a fixed point, and their motion should follow the shape of a parabola.
+# • The particles should be able to travel a predefined distance with respect to the vertical axis (z-axis or height) of the fountain.
+# • Particles closer to the center of the fountain’s vertical axis should have larger initial velocities than those farther from the center.
+# • To produce a more realistic effect, the particles should not all be ejected at the same time.
+# • The brightness of the particles should fade over their lifetime.
+
