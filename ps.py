@@ -16,3 +16,5 @@
 # • To produce a more realistic effect, the particles should not all be ejected at the same time.
 # • The brightness of the particles should fade over their lifetime.
 
+# modeling particle
+# setting maximum speed
