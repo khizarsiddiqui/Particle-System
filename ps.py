@@ -18,3 +18,5 @@
 
 # modeling particle
 # setting maximum speed
+# UNDERSTANDING range, limits and velocities of particles
+# You can use 0.05 for the lag time,and 20 degrees for the maximum angle
