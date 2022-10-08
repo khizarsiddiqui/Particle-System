@@ -20,3 +20,8 @@
 # setting maximum speed
 # UNDERSTANDING range, limits and velocities of particles
 # You can use 0.05 for the lag time,and 20 degrees for the maximum angle
+
+# Rendering the Particles
+# Drawing sparks from scratch is too complicated, so you’ll take a picture of a spark and paste it as a texture onto a rectangle (also called a quad).
+# Using OpenGL Blending to Create More Realistic Sparks
+# You can make the black regions disappear by enabling OpenGL blending and multiplying the alpha value of a fragment by the texture color.
