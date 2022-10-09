@@ -25,3 +25,9 @@
 # Drawing sparks from scratch is too complicated, so you’ll take a picture of a spark and paste it as a texture onto a rectangle (also called a quad).
 # Using OpenGL Blending to Create More Realistic Sparks
 # You can make the black regions disappear by enabling OpenGL blending and multiplying the alpha value of a fragment by the texture color.
+
+# billboarding
+# Applying this, rotation matrix aligns your textured quad correctly toward the view direction.
+
+# Animating the Sparks
+# To animate the fountain of sparks, draw the positions of the particle system at regular time intervals
