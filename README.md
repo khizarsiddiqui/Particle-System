@@ -10,3 +10,5 @@ Billboards are positionned at a specific location, but their orientation is auto
 The given link helps to understand the concept of the billboarding:http://www.opengl-tutorial.org/intermediate-tutorials/billboards-particles/billboards/
 
 Understanding difference between orthogonal and orthonormal:https://jamesmccaffrey.wordpress.com/2019/12/14/the-difference-between-orthogonal-and-orthonormal-vectors/
+
+To understand glGenBuffers:https://registry.khronos.org/OpenGL-Refpages/gl2.1/xhtml/glGenBuffers.xml

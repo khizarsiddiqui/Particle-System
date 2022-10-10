@@ -7,7 +7,7 @@
 # • Using OpenGL rendering features such as blending, depth masks, and alpha channels to draw semitransparent objects
 # • Using a camera model to draw 3D perspective views
 
-# working
+# Working
 
 # Your particle system should have these features:
 # • The particles should emerge from a fixed point, and their motion should follow the shape of a parabola.
@@ -30,4 +30,52 @@
 # Applying this, rotation matrix aligns your textured quad correctly toward the view direction.
 
 # Animating the Sparks
-# To animate the fountain of sparks, draw the positions of the particle system at regular time intervals
+# To animate the fountain of sparks, draw the positions of the particle system at regular time intervals.
+
+# Code
+import sys, random, math
+import OpenGL
+from OpenGL.GL import *
+import numpy
+import glutils
+# Defining the Particle Geometry
+# create Vertex Array Object (VAO)
+    self.vao = glGenVertexArrays(1)
+# bind VAO
+    glBindVertexArray(self.vao)
+# vertices
+    s = 0.2
+    quadV = [
+            -s, s, 0.0,
+            -s, -s, 0.0,
+            s, s, 0.0,
+            s, -s, 0.0,
+            s, s, 0.0,
+            -s, -s, 0.0
+            ]
+    vertexData = numpy.array(numP*quadV, numpy.float32)
+    self.vertexBuffer = glGenBuffers(1)
+    glBindBuffer(GL_ARRAY_BUFFER, self.vertexBuffer)
+    glBufferData(GL_ARRAY_BUFFER, 4*len(vertexData), vertexData,
+                GL_STATIC_DRAW)
+# texture coordinates
+    quadT = [
+            0.0, 1.0,
+            0.0, 0.0,
+            1.0, 1.0,
+            1.0, 0.0,
+            1.0, 1.0,
+            0.0, 0.0
+            ]
+    tcData = numpy.array(numP*quadT, numpy.float32)
+    self.tcBuffer = glGenBuffers(1)
+    glBindBuffer(GL_ARRAY_BUFFER, self.tcBuffer)
+    glBufferData(GL_ARRAY_BUFFER, 4*len(tcData), tcData, GL_STATIC_DRAW)
+
+# Defining the Time-Lag Array for the Particles
+# time lags
+    timeData = numpy.repeat(0.005*numpy.arange(numP, dtype=numpy.float32),4)
+    self.timeBuffer = glGenBuffers(1)
+    glBindBuffer(GL_ARRAY_BUFFER, self.timeBuffer)
+    glBufferData(GL_ARRAY_BUFFER, 4*len(timeData), timeData,
+                GL_STATIC_DRAW)
