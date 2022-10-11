@@ -79,3 +79,29 @@ import glutils
     glBindBuffer(GL_ARRAY_BUFFER, self.timeBuffer)
     glBufferData(GL_ARRAY_BUFFER, 4*len(timeData), timeData,
                 GL_STATIC_DRAW)
+
+# Setting the Initial Particle Velocities
+# velocites
+    velocities = []
+# cone angle
+    coneAngle = math.radians(20.0)
+# set up particle velocities
+    for i in range(numP):
+# inclination
+        angleRatio = random.random()
+        a = angleRatio*coneAngle
+# azimuth
+        t = random.random()*(2.0*math.pi)
+# get velocity on sphere
+        vx = math.sin(a)*math.cos(t)
+        vy = math.sin(a)*math.sin(t)
+        vz = math.cos(a)
+# speed decreases with angle
+        speed = 15.0*(1.0 - angleRatio*angleRatio)
+# add a set of calculated velocities
+        velocities += 6*[speed*vx, speed*vy, speed*vz]
+# set up velocity vertex buffer
+    self.velBuffer = glGenBuffers(1)
+    glBindBuffer(GL_ARRAY_BUFFER, self.velBuffer)
+    velData = numpy.array(velocities, numpy.float32)
+    glBufferData(GL_ARRAY_BUFFER, 4*len(velData), velData, GL_STATIC_DRAW)
