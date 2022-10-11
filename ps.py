@@ -105,3 +105,22 @@ import glutils
     glBindBuffer(GL_ARRAY_BUFFER, self.velBuffer)
     velData = numpy.array(velocities, numpy.float32)
     glBufferData(GL_ARRAY_BUFFER, 4*len(velData), velData, GL_STATIC_DRAW)
+# Creating the Vertex Shader
+    strVS = """
+#version 330 core
+in vec3 aVel;
+in vec3 aVert;
+in float aTime0;
+in vec2 aTexCoord;
+
+uniform mat4 uMVMatrix;
+uniform mat4 uPMatrix;
+uniform mat4 bMatrix;
+uniform float uTime;
+uniform float uLifeTime;
+uniform vec4 uColor;
+uniform vec3 uPos;
+
+out vec4 vCol;
+out vec2 vTexCoord;
+    """

@@ -12,3 +12,6 @@ The given link helps to understand the concept of the billboarding:http://www.op
 Understanding difference between orthogonal and orthonormal:https://jamesmccaffrey.wordpress.com/2019/12/14/the-difference-between-orthogonal-and-orthonormal-vectors/
 
 To understand glGenBuffers:https://registry.khronos.org/OpenGL-Refpages/gl2.1/xhtml/glGenBuffers.xml
+
+What is Interpolation?
+In the mathematical field of numerical analysis, interpolation is a type of estimation, a method of constructing new data points based on the range of a discrete set of known data points.
