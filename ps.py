@@ -105,9 +105,11 @@ import glutils
     glBindBuffer(GL_ARRAY_BUFFER, self.velBuffer)
     velData = numpy.array(velocities, numpy.float32)
     glBufferData(GL_ARRAY_BUFFER, 4*len(velData), velData, GL_STATIC_DRAW)
+
 # Creating the Vertex Shader
-    strVS = """
+strVS = """
 #version 330 core
+
 in vec3 aVel;
 in vec3 aVert;
 in float aTime0;
@@ -123,4 +125,51 @@ uniform vec3 uPos;
 
 out vec4 vCol;
 out vec2 vTexCoord;
-    """
+
+void main() {
+	// set position
+	float dt = uTime - aTime0;
+	float alpha = clamp(1.0 - 2.0*dt/uLifeTime, 0.0, 1.0);
+	if(dt < 0.0 || dt > uLifeTime || alpha < 0.01) {
+		// out of sight!
+		gl_Position = vec4(0.0, 0.0, -1000.0, 1.0);
+	}
+	else {
+		// calculate new position
+		vec3 accel = vec3(0.0, 0.0, -9.8);
+		// apply a twist
+		float PI = 3.14159265358979323846264;
+		float theta = mod(100.0*length(aVel)*dt, 360.0)*PI/180.0;
+		mat4 rot =  mat4(
+						 vec4(cos(theta),  sin(theta), 0.0, 0.0),
+						 vec4(-sin(theta),  cos(theta), 0.0, 0.0),
+						 vec4(0.0,                 0.0, 1.0, 0.0),
+						 vec4(0.0,         0.0,         0.0, 1.0)
+						);
+		// apply billboard matrix
+		vec4 pos2 =  bMatrix*rot*vec4(aVert, 1.0);
+        // calculate position
+		vec3 newPos = pos2.xyz + uPos + aVel*dt + 0.5*accel*dt*dt;
+		// apply transformations
+		gl_Position = uPMatrix * uMVMatrix * vec4(newPos, 1.0); 
+	}
+	// set color
+	vCol = vec4(uColor.rgb, alpha);
+	// set tex coords
+	vTexCoord = aTexCoord;
+}"""
+# Creating the Fragment Shader
+
+strFS = """
+#version 330 core
+uniform sampler2D uSampler;
+in vec4 vCol;
+in vec2 vTexCoord;
+out vec4 fragColor;
+void main() {
+   // get texture color
+   vec4 texCol = texture(uSampler, vec2(vTexCoord.s, vTexCoord.t));
+   // multiple by set vertex color, use vertex color alpha 
+   fragColor = vec4(texCol.rgb*vCol.rgb, vCol.a);
+}
+"""
