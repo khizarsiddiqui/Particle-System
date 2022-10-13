@@ -173,3 +173,66 @@ void main() {
    fragColor = vec4(texCol.rgb*vCol.rgb, vCol.a);
 }
 """
+# Computing the Rotation Matrix for Billboarding
+if self.enableBillboard:
+    N = camera.eye - camera.center
+    N /= numpy.linalg.norm(N)
+    U = camera.up
+    U /= numpy.linalg.norm(U)
+    R = numpy.cross(U, N)
+    U2 = numpy.cross(N, R)
+    bMatrix = numpy.array([R[0], U2[0], N[0], 0.0, 
+                            R[1], U2[1], N[1], 0.0, 
+                            R[2], U2[2], N[2], 0.0, 
+                            0.0,  0.0,  0.0,  1.0], numpy.float32) 
+    glUniformMatrix4fv(self.bMatrixU, 1, GL_TRUE, bMatrix)
+else:
+# identity matrix
+    bMatrix = numpy.array([1.0, 0.0, 0.0, 0.0, 
+                            0.0, 1.0, 0.0, 0.0, 
+                            0.0, 0.0, 1.0, 0.0, 
+                            0.0, 0.0, 0.0, 1.0], numpy.float32)  
+    glUniformMatrix4fv(self.bMatrixU, 1, GL_FALSE, bMatrix)
+
+# The Main Rendering Code
+# enable texture
+    glActiveTexture(GL_TEXTURE0)
+    glBindTexture(GL_TEXTURE_2D, self.texid)
+    glUniform1i(self.samplerU, 0)
+        
+# turn depth mask off
+    if self.disableDepthMask:
+        glDepthMask(GL_FALSE)
+
+# enable blending
+    if self.enableBlend:
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE)
+        glEnable(GL_BLEND)
+
+# bind VAO
+    glBindVertexArray(self.vao)
+# draw
+    glDrawArrays(GL_TRIANGLES, 0, 6*self.numP)
+# unbind VAO
+    glBindVertexArray(0)
+
+# a simple camera class
+class Camera:
+    """helper class for viewing"""
+    def __init__(self, eye, center, up):
+        self.r = 10.0
+        self.theta = 0
+        self.eye = numpy.array(eye, numpy.float32)
+        self.center = numpy.array(center, numpy.float32)
+        self.up = numpy.array(up, numpy.float32)
+
+    def rotate(self):
+        """rotate eye by one step"""
+        self.theta = (self.theta + 1) % 360
+        # recalculate eye
+        self.eye = self.center + numpy.array([
+                self.r*math.cos(math.radians(self.theta)),
+                self.r*math.sin(math.radians(self.theta)), 
+                0.0], numpy.float32)
+    
+        
