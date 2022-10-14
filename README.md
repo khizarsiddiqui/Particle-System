@@ -21,3 +21,7 @@ Note: Textures are accessed from within shaders using samplers, and you set the 
 glBlendFunc(): defines the operation of blending. The sfactor parameter specifies which of nine methods is used to scale the source color components. The dfactor parameter specifies which of eight methods is used to scale the destination color components.
 
 The point (r cos(θ), r sin(θ)) represents a point on a circle of radius r centered at the origin, and θ is the angle that the line from the origin to the point makes with the x-axis. The translation using center ensures this works even if your center of rotation is not at the origin.
+
+For understanding glVertexAttribPointer() :https://registry.khronos.org/OpenGL-Refpages/gl4/html/glVertexAttribPointer.xhtml
+For understanding stride in glVertexAttribPointer():https://stackoverflow.com/questions/22296510/what-does-stride-mean-in-opengles
+For understanding glDrawArrays():https://registry.khronos.org/OpenGL-Refpages/gl4/html/glDrawArrays.xhtml
